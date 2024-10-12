@@ -1,0 +1,64 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.card {
+  padding: 2em;
+}
+
+.img{
+  height: 20vh;
+}
+.searchbar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2%;
+  gap: 10px;
+}
+.searchbtn{
+  background-color: #616161;
+  color: rgb(231, 231, 231);
+  font-size: x-small;
+  font-weight: 400;
+  height: 3vh;
+}
+.imgdetail{
+  height: auto;
+  width: 40%;
+}
+.productblock{
+  width: auto;
+  display: flex;
+  gap: 3%;
+  flex-wrap: wrap;  
+  justify-content: center;
+  align-items: center;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.cart{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
+  padding: 2%;
+}
+.cartbtn{
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+.btnend{
+  background-color: rgb(103, 179, 179);
+}
+
+.productdiv{
+  color: rgb(135, 204, 147);
+  text-decoration: none;
+}
