@@ -6,22 +6,49 @@ import { addItem} from "../utils/cartSlice";
 
 
 function ProductDetails(){
-    const [products, setproducts]=useState([]);
+    const [products,setproducts]=useState([]);
 
     const dispatch = useDispatch();  
 
     function handleAddtocart(item) {
         dispatch(addItem(item))
+        submitdata(item._id);
+        console.log(item._id);
     }
+
+    // handleing the add to cart function 
+    // jwt token should be updated 
+    const submitdata = async (id) => {
+        const data = {
+            id: id
+        };
+    
+        try {
+            const result = await fetch("http://localhost:4000/api/addcart", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                    'Authorization': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidXNlcm5hbWUiLCJpYXQiOjE3MzAxMDY0ODEsImV4cCI6MTczMDExMDA4MX0.KsrzJH_Ntl4kTKdSKfFSapMV1X5zn1_94U6b3wi0fMw'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const resultfinal = await result.json(); 
+            console.log(resultfinal);
+        } catch (error) {
+            console.error("Error submitting data:", error); 
+        }
+    };
 
     const params = useParams();
-
-    const {data, error, loading} = useFetch('https://dummyjson.com/products');
-   useEffect(()=>{
-    if(data){
-      setproducts(data.products);
-    }
-   },[data]);
+   // fetching specific data with the help of params
+    const {data, error, loading} = useFetch(`http://localhost:4000/api/product/${params.id}`);
+    useEffect(()=>{
+        if(data){
+          setproducts(data);
+          console.log(data ,"products", products);
+        }
+       },[data]);
 
    if(error) {
     return <h1> error in data fetchiong</h1>;}
@@ -30,21 +57,15 @@ function ProductDetails(){
     return <p>Loading.....</p>;
    }
 
-    const product = products.filter((product) => product.id == params.id);
 
-    console.log(product,"idnwala")
-
-
-    if(product[0]){
+    if(products){
     return(
         <>
-        <img className="imgdetail" src={product[0].images} alt="" />
-        <h4>{product[0].title}</h4>
-        <h4>Brand: {product[0].brand}</h4>
-        <button onClick={() => handleAddtocart(product[0])} >add to cart</button> 
-        <h4>Price:{product[0].price}💲</h4>
-        <h3>Rating: {product[0].rating}/5</h3>
-        <p>{product[0].description}</p>
+        <img className="imgdetail" src={products.images} alt="" />
+        <h4>{products.title}</h4>
+        <button onClick={() => handleAddtocart(products)} >add to cart</button> 
+        <h4>Price:{products.price}💲</h4>
+        <p>{products.description}</p>
         </>
     )}
     else{

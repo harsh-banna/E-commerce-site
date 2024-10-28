@@ -8,12 +8,12 @@ function ProductList(){
     const [filteredproducts, setfilteredproducts]=useState([]);
     const [search,setsearch]=useState("");
 
-   //const products=useFetch('https://dummyjson.com/products');
-   //console.log(products);
-   const {data, error, loading} = useFetch('https://dummyjson.com/products');
+   // fetching the data form our server
+   const {data, error, loading} = useFetch("http://localhost:4000/api/products");
    useEffect(()=>{
     if(data){
-      setfilteredproducts(data.products);
+      setfilteredproducts(data);
+      console.log(data);
     }
    },[data]);
 
@@ -38,7 +38,7 @@ function ProductList(){
         <input type="text" className='searchbox' onChange={(e) => setsearch(e.target.value)}/>
         <button className="searchbtn" onClick={handlesearch}>search</button>
         </div>
-        <div className="productblock">{filteredproducts.map((data) => (<Link key={data.id} to={`/productdetail/${data.id}`} ><ProductItem key={data.id}  details={data}/></Link>))}</div>
+        <div className="productblock">{filteredproducts.map((data) => (<Link key={data.id} to={`/productdetail/${data._id}`} ><ProductItem key={data.id}  details={data}/></Link>))}</div>
         </>
     )
 }
